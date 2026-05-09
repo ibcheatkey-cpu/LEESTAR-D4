@@ -35,11 +35,20 @@
   .content .row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; font-size: 14px; }
   .content .row-label { color: #4b5563; }
   .content .row-price { color: #111827; font-weight: 700; }
-  .title-badge { display: flex; justify-content: center; margin: 0 0 8px; }
-  .title-badge-inner { display: inline-flex; align-items: center; gap: 10px; color: #1f2937; padding: 8px 4px; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
-  .title-badge-inner svg { flex-shrink: 0; color: #7c3aed; }
-  .title-sub { text-align: center; font-size: 13px; color: #6b7280; margin-bottom: 28px; }
-  .title-sub::before { content: ""; display: block; width: 100%; max-width: 800px; margin: 24px auto 16px; border-top: 1px solid #e5e7eb; }
+  .hero { text-align: center; margin: 0 auto 32px; padding: 28px 20px; background: #ffffff; border: 2px solid #5DCAA5; border-radius: 16px; max-width: 900px; }
+  .hero-title { font-size: 24px; font-weight: 800; color: #111827; margin: 0 0 14px; letter-spacing: -0.02em; line-height: 1.4; }
+  .hero-accent { background: linear-gradient(180deg, transparent 60%, #fde68a 60%); padding: 0 4px; }
+  .hero-badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .badge { padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid; white-space: nowrap; }
+  .badge-red { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+  .badge-blue { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+  .badge-green { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+  .badge-amber { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+  @media (max-width: 600px) {
+    .hero { padding: 22px 16px; }
+    .hero-title { font-size: 18px; }
+    .badge { font-size: 11px; padding: 4px 10px; }
+  }
   .admin-corner { position: fixed; top: 12px; right: 12px; z-index: 30; display: flex; gap: 6px; }
   .btn { font-size: 12px; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; border: 1px solid transparent; transition: all 0.15s; }
   .btn-dot { background: #ffffff; border-color: #e5e7eb; color: #9ca3af; }
@@ -113,15 +122,15 @@
 </div>
 
 <main>
-  <div class="title-badge">
-    <div class="title-badge-inner">
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true">
-        <path d="M6.92 5L5 6.92l5.5 5.5L5 17.92 6.92 19.84l5.5-5.5 5.5 5.5L19.84 17.92l-5.5-5.5 5.5-5.5L17.92 5l-5.5 5.5z"/>
-      </svg>
-      <span>디아블로 대행 가격표</span>
+  <div class="hero">
+    <h1 class="hero-title">⚔ 디아블로4 <span class="hero-accent">이스타 시즌13</span> 실시간 최저가 ⚔</h1>
+    <div class="hero-badges">
+      <span class="badge badge-red">🥇 업계 주문수 1위</span>
+      <span class="badge badge-blue">👥 단골 5,000+</span>
+      <span class="badge badge-green">⚡ 매일 갱신</span>
+      <span class="badge badge-amber">🛡 안전거래 · 신뢰 100%</span>
     </div>
   </div>
-  <p class="title-sub">10분 이내 출발 · 안전 거래</p>
   <div id="viewMode" class="view">
     <div class="content" id="content"><div class="loader">불러오는 중…</div></div>
   </div>
