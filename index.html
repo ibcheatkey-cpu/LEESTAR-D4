@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>디아블로4 이스타</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #09090b; color: #e4e4e7; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; min-height: 100vh; }
+  main { max-width: 600px; margin: 0 auto; padding: 64px 24px 96px; }
+  pre.content, .content { white-space: pre-wrap; text-align: center; font-family: inherit; font-size: 15px; line-height: 2; color: #e4e4e7; }
+  .content h1 { font-size: 28px; font-weight: 700; margin: 18px 0 10px; color: #fbbf24; letter-spacing: -0.02em; }
+  .content h2 { font-size: 22px; font-weight: 700; margin: 16px 0 8px; color: #fcd34d; }
+  .content h3 { font-size: 18px; font-weight: 600; margin: 12px 0 6px; color: #fde68a; }
+  .content strong { font-weight: 700; color: #fbbf24; }
+  .content em { font-style: italic; color: #d4d4d8; }
+  .content hr { border: none; border-top: 1px solid #3f3f46; margin: 18px auto; max-width: 320px; }
+  .admin-corner { position: fixed; top: 12px; right: 12px; z-index: 30; display: flex; gap: 6px; }
+  .btn { font-size: 12px; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; border: 1px solid transparent; transition: all 0.15s; }
+  .btn-dot { background: transparent; border-color: #27272a; color: #52525b; }
+  .btn-dot:hover { color: #d4d4d8; border-color: #52525b; }
+  .btn-edit { background: #f59e0b; color: #09090b; font-weight: 600; }
+  .btn-edit:hover { background: #fbbf24; }
+  .btn-out { background: transparent; border-color: #3f3f46; color: #a1a1aa; }
+  .btn-out:hover { color: #e4e4e7; }
+  .editor { display: none; }
+  .editor.active { display: block; }
+  .view { display: block; }
+  .view.hidden { display: none; }
+  .hint { font-size: 12px; color: #f59e0b; margin-bottom: 10px; }
+  textarea { width: 100%; height: 60vh; padding: 14px; background: #18181b; border: 1px solid #3f3f46; border-radius: 8px; color: #e4e4e7; font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 14px; line-height: 1.7; resize: vertical; outline: none; }
+  textarea:focus { border-color: #f59e0b; }
+  .editor-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+  .btn-save { background: #f59e0b; color: #09090b; font-weight: 600; padding: 8px 18px; }
+  .btn-save:hover { background: #fbbf24; }
+  .btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-cancel { background: transparent; border-color: #3f3f46; color: #d4d4d8; padding: 8px 18px; }
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+  .modal.active { display: flex; }
+  .modal-card { background: #18181b; border: 1px solid #3f3f46; border-radius: 10px; padding: 20px; width: 100%; max-width: 280px; }
+  .modal-card input { width: 100%; padding: 10px 12px; background: #09090b; border: 1px solid #3f3f46; border-radius: 6px; color: #e4e4e7; font-size: 14px; outline: none; font-family: inherit; }
+  .modal-card input:focus { border-color: #f59e0b; }
+  .pw-error { font-size: 12px; color: #f87171; margin-top: 8px; display: none; }
+  .pw-error.show { display: block; }
+  .pw-confirm { width: 100%; margin-top: 12px; background: #f59e0b; color: #09090b; font-weight: 600; padding: 10px; }
+  .pw-confirm:hover { background: #fbbf24; }
+  .loader { text-align: center; color: #52525b; font-size: 13px; padding: 40px 0; }
+  .kakao-btn { position: fixed; left: 16px; bottom: 16px; z-index: 40; display: flex; align-items: center; gap: 8px; background: #FEE500; color: #3a1d1d; padding: 10px 16px 10px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform 0.15s; }
+  .kakao-btn:hover { transform: translateY(-2px); }
+  .kakao-btn:active { transform: translateY(0); }
+  .openchat-card { position: fixed; left: 16px; bottom: 68px; z-index: 40; max-width: 220px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.5); border: 1px solid #27272a; cursor: pointer; transition: transform 0.15s; background: #18181b; display: none; }
+  .openchat-card.active { display: block; }
+  .openchat-card:hover { transform: translateY(-2px); }
+  .openchat-card img { display: block; width: 100%; height: auto; }
+  .openchat-card .label { padding: 6px 10px; font-size: 11px; color: #fbbf24; text-align: center; font-weight: 600; background: #18181b; }
+  @media (max-width: 600px) {
+    .openchat-card { max-width: 160px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="admin-corner" id="adminCorner">
+  <button class="btn btn-dot" id="loginBtn" aria-label="관리자">·</button>
+</div>
+
+<main>
+  <div id="viewMode" class="view">
+    <div class="content" id="content"><div class="loader">불러오는 중…</div></div>
+  </div>
+  <div id="editMode" class="editor">
+    <p class="hint">편집 모드 — 줄바꿈 그대로 / 서식: <b>**굵게**</b> · <i>*기울임*</i> · # 큰제목 · ## 중제목 · ### 소제목 · --- (구분선)</p>
+    <textarea id="editText" spellcheck="false"></textarea>
+    <div class="editor-actions">
+      <button class="btn btn-cancel" id="cancelBtn">취소</button>
+      <button class="btn btn-save" id="saveBtn">저장</button>
+    </div>
+  </div>
+</main>
+
+<a id="openchatCard" class="openchat-card" href="#" target="_blank" rel="noopener" aria-label="오픈채팅 미리보기">
+  <img src="openchat.png" alt="오픈채팅 미리보기" />
+  <div class="label">▼ 클릭해서 입장</div>
+</a>
+
+<a id="kakaoBtn" class="kakao-btn" href="#" target="_blank" rel="noopener" style="display:none;" aria-label="카카오 오픈채팅">
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="#3a1d1d" aria-hidden="true">
+    <path d="M12 3C6.48 3 2 6.58 2 11c0 2.83 1.85 5.31 4.64 6.74-.2.7-.72 2.6-.83 3-.13.5.18.5.39.36.16-.11 2.6-1.77 3.65-2.49.7.1 1.42.16 2.15.16 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>
+  </svg>
+  <span>오픈톡 입장</span>
+</a>
+
+<div class="modal" id="loginModal">
+  <div class="modal-card">
+    <input type="password" id="pwInput" placeholder="비밀번호" autocomplete="off" />
+    <p class="pw-error" id="pwError">비밀번호 틀림</p>
+    <button class="btn pw-confirm" id="pwConfirm">확인</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ============================================================
+// 설정 — 여기 두 줄만 바꾸세요
+// ============================================================
+const ADMIN_PASSWORD = "59860000";          // ← 관리자 비밀번호 (직원에게 알려줄 비번)
+const CHANNELTALK_PLUGIN_KEY = "489700dc-5cce-4b3e-a465-a28475e496a3";  // ← 채널톡 키
+const KAKAO_OPENCHAT_URL = "https://open.kakao.com/o/gWbuthWf";  // ← 카카오 오픈채팅 주소 (비우면 버튼 숨김)
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAQH4HxN0FEwAV2xpSJ_0_XY-OElO_Xqak",
+  authDomain: "leestar-d4-8782b.firebaseapp.com",
+  projectId: "leestar-d4-8782b",
+  storageBucket: "leestar-d4-8782b.firebasestorage.app",
+  messagingSenderId: "348543186012",
+  appId: "1:348543186012:web:7417eb658d97aa08032299"
+};
+
+const DEFAULT_CONTENT = `디아블로4 이스타
+24시간 운영
+
+━━━━━━━━━━━━━━━━━━━
+
+[ 시세표 ]
+
+골드 100억          7,000원
+온전한 호라드림 5개   50,000원
+껍데기 200개        19,000원
+룬 3셋             20,000원
+
+━━━━━━━━━━━━━━━━━━━
+
+[ 공지 ]
+
+· 안전거래 진행합니다
+· 우측 하단 채팅으로 문의 주세요`;
+
+// ============================================================
+// Firebase 초기화
+// ============================================================
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const docRef = doc(db, "shop", "main");
+
+// ============================================================
+// DOM
+// ============================================================
+const $ = (id) => document.getElementById(id);
+const adminCorner = $("adminCorner");
+const viewMode = $("viewMode");
+const editMode = $("editMode");
+const contentEl = $("content");
+const editText = $("editText");
+const loginBtn = $("loginBtn");
+const loginModal = $("loginModal");
+const pwInput = $("pwInput");
+const pwConfirm = $("pwConfirm");
+const pwError = $("pwError");
+const saveBtn = $("saveBtn");
+const cancelBtn = $("cancelBtn");
+
+let isAdmin = false;
+let currentContent = DEFAULT_CONTENT;
+
+// ============================================================
+// 마크다운 → HTML 변환 (간단 버전)
+// ============================================================
+function escapeHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function renderMarkdown(text) {
+  const lines = text.split("\n");
+  const out = [];
+  for (let line of lines) {
+    let l = escapeHtml(line);
+    if (/^---+\s*$/.test(line.trim())) { out.push("<hr/>"); continue; }
+    if (/^###\s+/.test(line)) { out.push("<h3>" + l.replace(/^###\s+/, "") + "</h3>"); continue; }
+    if (/^##\s+/.test(line))  { out.push("<h2>" + l.replace(/^##\s+/, "") + "</h2>"); continue; }
+    if (/^#\s+/.test(line))   { out.push("<h1>" + l.replace(/^#\s+/, "") + "</h1>"); continue; }
+    l = l.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    l = l.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+    out.push(l);
+  }
+  return out.join("\n");
+}
+
+function displayContent(text) {
+  contentEl.innerHTML = renderMarkdown(text);
+}
+
+// ============================================================
+// 콘텐츠 로드
+// ============================================================
+async function loadContent() {
+  try {
+    const snap = await getDoc(docRef);
+    if (snap.exists() && snap.data().content) {
+      currentContent = snap.data().content;
+    } else {
+      currentContent = DEFAULT_CONTENT;
+    }
+  } catch (e) {
+    console.error("load fail", e);
+    currentContent = DEFAULT_CONTENT;
+  }
+  displayContent(currentContent);
+}
+
+// ============================================================
+// 콘텐츠 저장
+// ============================================================
+async function saveContent(newText) {
+  await setDoc(docRef, {
+    content: newText,
+    updatedAt: Date.now()
+  });
+}
+
+// ============================================================
+// 관리자 모드 UI
+// ============================================================
+function renderAdminButtons() {
+  adminCorner.innerHTML = "";
+  if (isAdmin) {
+    const editBtn = document.createElement("button");
+    editBtn.className = "btn btn-edit";
+    editBtn.textContent = "편집";
+    editBtn.onclick = enterEdit;
+
+    const logoutBtn = document.createElement("button");
+    logoutBtn.className = "btn btn-out";
+    logoutBtn.textContent = "로그아웃";
+    logoutBtn.onclick = () => { isAdmin = false; renderAdminButtons(); };
+
+    adminCorner.appendChild(editBtn);
+    adminCorner.appendChild(logoutBtn);
+  } else {
+    const dot = document.createElement("button");
+    dot.className = "btn btn-dot";
+    dot.setAttribute("aria-label", "관리자");
+    dot.textContent = "·";
+    dot.onclick = openLogin;
+    adminCorner.appendChild(dot);
+  }
+}
+
+// ============================================================
+// 로그인
+// ============================================================
+function openLogin() {
+  loginModal.classList.add("active");
+  pwInput.value = "";
+  pwError.classList.remove("show");
+  setTimeout(() => pwInput.focus(), 50);
+}
+
+function closeLogin() {
+  loginModal.classList.remove("active");
+}
+
+function tryLogin() {
+  if (pwInput.value === ADMIN_PASSWORD) {
+    isAdmin = true;
+    closeLogin();
+    renderAdminButtons();
+  } else {
+    pwError.classList.add("show");
+  }
+}
+
+pwConfirm.onclick = tryLogin;
+pwInput.addEventListener("keydown", (e) => { if (e.key === "Enter") tryLogin(); });
+loginModal.onclick = (e) => { if (e.target === loginModal) closeLogin(); };
+
+// ============================================================
+// 편집 모드
+// ============================================================
+function enterEdit() {
+  editText.value = currentContent;
+  viewMode.classList.add("hidden");
+  editMode.classList.add("active");
+  adminCorner.style.display = "none";
+}
+
+function exitEdit() {
+  editMode.classList.remove("active");
+  viewMode.classList.remove("hidden");
+  adminCorner.style.display = "flex";
+}
+
+cancelBtn.onclick = exitEdit;
+
+saveBtn.onclick = async () => {
+  saveBtn.disabled = true;
+  saveBtn.textContent = "저장중…";
+  try {
+    await saveContent(editText.value);
+    currentContent = editText.value;
+    displayContent(currentContent);
+    exitEdit();
+  } catch (e) {
+    alert("저장 실패: " + e.message);
+  }
+  saveBtn.disabled = false;
+  saveBtn.textContent = "저장";
+};
+
+// ============================================================
+// 채널톡
+// ============================================================
+function bootChannelTalk() {
+  if (!CHANNELTALK_PLUGIN_KEY) return;
+  (function() {
+    var w = window;
+    if (w.ChannelIO) return;
+    var ch = function() { ch.c(arguments); };
+    ch.q = []; ch.c = function(args) { ch.q.push(args); };
+    w.ChannelIO = ch;
+    function l() {
+      if (w.ChannelIOInitialized) return;
+      w.ChannelIOInitialized = true;
+      var s = document.createElement("script");
+      s.type = "text/javascript"; s.async = true;
+      s.src = "https://cdn.channel.io/plugin/ch-plugin-web.js";
+      document.head.appendChild(s);
+    }
+    if (document.readyState === "complete") l();
+    else window.addEventListener("DOMContentLoaded", l);
+  })();
+  window.ChannelIO("boot", { pluginKey: CHANNELTALK_PLUGIN_KEY });
+}
+
+// ============================================================
+// 카카오 오픈채팅 버튼
+// ============================================================
+function setupKakaoButton() {
+  if (!KAKAO_OPENCHAT_URL) return;
+  const btn = $("kakaoBtn");
+  btn.href = KAKAO_OPENCHAT_URL;
+  btn.style.display = "flex";
+  const card = $("openchatCard");
+  card.href = KAKAO_OPENCHAT_URL;
+  card.classList.add("active");
+}
+
+// ============================================================
+// 시작
+// ============================================================
+renderAdminButtons();
+bootChannelTalk();
+setupKakaoButton();
+loadContent();
+</script>
+
+</body>
+</html>
