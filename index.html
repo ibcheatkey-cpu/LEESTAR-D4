@@ -8,13 +8,24 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #09090b; color: #e4e4e7; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; min-height: 100vh; }
   main { max-width: 600px; margin: 0 auto; padding: 64px 24px 96px; }
+  @media (min-width: 901px) {
+    main { padding-left: 280px; padding-right: 24px; }
+  }
   pre.content, .content { white-space: pre-wrap; text-align: center; font-family: inherit; font-size: 15px; line-height: 2; color: #e4e4e7; }
-  .content h1 { font-size: 28px; font-weight: 700; margin: 18px 0 10px; color: #fbbf24; letter-spacing: -0.02em; }
-  .content h2 { font-size: 22px; font-weight: 700; margin: 16px 0 8px; color: #fcd34d; }
-  .content h3 { font-size: 18px; font-weight: 600; margin: 12px 0 6px; color: #fde68a; }
+  .content h1 { font-size: 32px; font-weight: 800; margin: 24px 0 14px; color: #fbbf24; letter-spacing: -0.02em; text-shadow: 0 0 20px rgba(251,191,36,0.3); }
+  .content h2 { font-size: 24px; font-weight: 700; margin: 20px 0 10px; color: #fcd34d; }
+  .content h3 { font-size: 19px; font-weight: 600; margin: 14px 0 8px; color: #fde68a; }
   .content strong { font-weight: 700; color: #fbbf24; }
   .content em { font-style: italic; color: #d4d4d8; }
   .content hr { border: none; border-top: 1px solid #3f3f46; margin: 18px auto; max-width: 320px; }
+  .content .box { display: inline-block; background: #18181b; border: 1px solid #3f3f46; border-radius: 8px; padding: 4px 14px; margin: 4px 2px; font-weight: 600; }
+  .content .box-red { background: #450a0a; border-color: #7f1d1d; color: #fca5a5; }
+  .content .box-blue { background: #0c2748; border-color: #1e40af; color: #93c5fd; }
+  .content .box-green { background: #052e1a; border-color: #166534; color: #86efac; }
+  .content .box-amber { background: #422006; border-color: #92400e; color: #fcd34d; }
+  .content .price { color: #fbbf24; font-weight: 700; font-family: ui-monospace, monospace; }
+  .content .strike { text-decoration: line-through; color: #71717a; }
+  .content .highlight { background: linear-gradient(180deg, transparent 60%, rgba(251,191,36,0.3) 60%); padding: 0 4px; }
   .admin-corner { position: fixed; top: 12px; right: 12px; z-index: 30; display: flex; gap: 6px; }
   .btn { font-size: 12px; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; border: 1px solid transparent; transition: all 0.15s; }
   .btn-dot { background: transparent; border-color: #27272a; color: #52525b; }
@@ -45,17 +56,25 @@
   .pw-confirm { width: 100%; margin-top: 12px; background: #f59e0b; color: #09090b; font-weight: 600; padding: 10px; }
   .pw-confirm:hover { background: #fbbf24; }
   .loader { text-align: center; color: #52525b; font-size: 13px; padding: 40px 0; }
+  .openchat-sidebar { position: fixed; left: 16px; top: 50%; transform: translateY(-50%); z-index: 30; width: 240px; display: none; flex-direction: column; gap: 10px; }
+  .openchat-sidebar.active { display: flex; }
+  .openchat-sidebar a { display: block; border-radius: 10px; overflow: hidden; background: #18181b; border: 1px solid #27272a; box-shadow: 0 4px 16px rgba(0,0,0,0.5); transition: transform 0.15s; cursor: pointer; }
+  .openchat-sidebar a:hover { transform: translateX(3px); border-color: #f59e0b; }
+  .openchat-sidebar img { display: block; width: 100%; height: auto; }
+  .openchat-sidebar .cap { padding: 6px 8px; font-size: 11px; color: #fbbf24; text-align: center; font-weight: 600; }
+  .channel-cta { position: fixed; right: 16px; bottom: 88px; z-index: 35; background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; cursor: pointer; box-shadow: 0 6px 20px rgba(245,158,11,0.4); border: none; font-family: inherit; transition: transform 0.15s; animation: pulse 2s infinite; }
+  .channel-cta:hover { transform: translateY(-2px) scale(1.03); }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 6px 20px rgba(245,158,11,0.4); } 50% { box-shadow: 0 6px 28px rgba(245,158,11,0.7); } }
+  .channel-cta .arrow { display: inline-block; margin-left: 4px; transition: transform 0.2s; }
+  .channel-cta:hover .arrow { transform: translateX(3px); }
+  @media (max-width: 900px) {
+    .openchat-sidebar { position: static; transform: none; width: 100%; max-width: 360px; margin: 0 auto 24px; flex-direction: row; }
+    .openchat-sidebar a { flex: 1; }
+    main { padding-top: 24px !important; }
+  }
   .kakao-btn { position: fixed; left: 16px; bottom: 16px; z-index: 40; display: flex; align-items: center; gap: 8px; background: #FEE500; color: #3a1d1d; padding: 10px 16px 10px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform 0.15s; }
   .kakao-btn:hover { transform: translateY(-2px); }
   .kakao-btn:active { transform: translateY(0); }
-  .openchat-card { position: fixed; left: 16px; bottom: 68px; z-index: 40; max-width: 220px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.5); border: 1px solid #27272a; cursor: pointer; transition: transform 0.15s; background: #18181b; display: none; }
-  .openchat-card.active { display: block; }
-  .openchat-card:hover { transform: translateY(-2px); }
-  .openchat-card img { display: block; width: 100%; height: auto; }
-  .openchat-card .label { padding: 6px 10px; font-size: 11px; color: #fbbf24; text-align: center; font-weight: 600; background: #18181b; }
-  @media (max-width: 600px) {
-    .openchat-card { max-width: 160px; }
-  }
 </style>
 </head>
 <body>
@@ -69,7 +88,7 @@
     <div class="content" id="content"><div class="loader">불러오는 중…</div></div>
   </div>
   <div id="editMode" class="editor">
-    <p class="hint">편집 모드 — 줄바꿈 그대로 / 서식: <b>**굵게**</b> · <i>*기울임*</i> · # 큰제목 · ## 중제목 · ### 소제목 · --- (구분선)</p>
+    <p class="hint">서식: # 큰제목 ## 중제목 ### 소제목 · **굵게** *기울임* ==형광== ~~취소선~~ · [red]빨강박스[/red] [blue]파랑[/blue] [green]초록[/green] [amber]노랑[/amber] [box]회색[/box] [$]가격[/$] · --- (구분선)</p>
     <textarea id="editText" spellcheck="false"></textarea>
     <div class="editor-actions">
       <button class="btn btn-cancel" id="cancelBtn">취소</button>
@@ -78,10 +97,19 @@
   </div>
 </main>
 
-<a id="openchatCard" class="openchat-card" href="#" target="_blank" rel="noopener" aria-label="오픈채팅 미리보기">
-  <img src="openchat.png" alt="오픈채팅 미리보기" />
-  <div class="label">▼ 클릭해서 입장</div>
-</a>
+<div id="openchatSidebar" class="openchat-sidebar">
+  <a id="openchatTop" href="#" target="_blank" rel="noopener" aria-label="오픈채팅 검색결과">
+    <img src="openchat-top.png" alt="오픈채팅 검색결과 - 디아블로4 이스타" />
+    <div class="cap">▼ 클릭해서 입장</div>
+  </a>
+  <a id="openchatBottom" href="#" target="_blank" rel="noopener" aria-label="주문수 1위 최저가">
+    <img src="openchat-bottom.png" alt="디아블로4 주문수 1위 최저가" />
+  </a>
+</div>
+
+<button id="channelCta" class="channel-cta" type="button">
+  💬 여기서 바로 주문접수<span class="arrow">▶</span>
+</button>
 
 <a id="kakaoBtn" class="kakao-btn" href="#" target="_blank" rel="noopener" style="display:none;" aria-label="카카오 오픈채팅">
   <svg viewBox="0 0 24 24" width="22" height="22" fill="#3a1d1d" aria-hidden="true">
@@ -180,6 +208,14 @@ function renderMarkdown(text) {
     if (/^###\s+/.test(line)) { out.push("<h3>" + l.replace(/^###\s+/, "") + "</h3>"); continue; }
     if (/^##\s+/.test(line))  { out.push("<h2>" + l.replace(/^##\s+/, "") + "</h2>"); continue; }
     if (/^#\s+/.test(line))   { out.push("<h1>" + l.replace(/^#\s+/, "") + "</h1>"); continue; }
+    l = l.replace(/\[red\](.+?)\[\/red\]/g, '<span class="box box-red">$1</span>');
+    l = l.replace(/\[blue\](.+?)\[\/blue\]/g, '<span class="box box-blue">$1</span>');
+    l = l.replace(/\[green\](.+?)\[\/green\]/g, '<span class="box box-green">$1</span>');
+    l = l.replace(/\[amber\](.+?)\[\/amber\]/g, '<span class="box box-amber">$1</span>');
+    l = l.replace(/\[box\](.+?)\[\/box\]/g, '<span class="box">$1</span>');
+    l = l.replace(/\[\$\](.+?)\[\/\$\]/g, '<span class="price">$1</span>');
+    l = l.replace(/~~([^~]+)~~/g, '<span class="strike">$1</span>');
+    l = l.replace(/==([^=]+)==/g, '<span class="highlight">$1</span>');
     l = l.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
     l = l.replace(/\*([^*]+)\*/g, "<em>$1</em>");
     out.push(l);
@@ -334,16 +370,28 @@ function bootChannelTalk() {
 }
 
 // ============================================================
-// 카카오 오픈채팅 버튼
+// 카카오 오픈채팅 + 채널톡 CTA
 // ============================================================
 function setupKakaoButton() {
-  if (!KAKAO_OPENCHAT_URL) return;
-  const btn = $("kakaoBtn");
-  btn.href = KAKAO_OPENCHAT_URL;
-  btn.style.display = "flex";
-  const card = $("openchatCard");
-  card.href = KAKAO_OPENCHAT_URL;
-  card.classList.add("active");
+  if (KAKAO_OPENCHAT_URL) {
+    const btn = $("kakaoBtn");
+    btn.href = KAKAO_OPENCHAT_URL;
+    btn.style.display = "flex";
+    $("openchatTop").href = KAKAO_OPENCHAT_URL;
+    $("openchatBottom").href = KAKAO_OPENCHAT_URL;
+    $("openchatSidebar").classList.add("active");
+  }
+}
+
+function setupChannelCta() {
+  const cta = $("channelCta");
+  cta.onclick = () => {
+    if (window.ChannelIO) {
+      window.ChannelIO("showMessenger");
+    } else {
+      alert("채팅 위젯이 아직 준비중입니다. 잠시 후 다시 시도해주세요.");
+    }
+  };
 }
 
 // ============================================================
@@ -352,6 +400,7 @@ function setupKakaoButton() {
 renderAdminButtons();
 bootChannelTalk();
 setupKakaoButton();
+setupChannelCta();
 loadContent();
 </script>
 
