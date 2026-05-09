@@ -49,6 +49,19 @@
     .hero-title { font-size: 18px; }
     .badge { font-size: 11px; padding: 4px 10px; }
   }
+  .live-stats { display: flex; gap: 16px; justify-content: center; align-items: center; max-width: 900px; margin: 0 auto 28px; padding: 12px 18px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; flex-wrap: wrap; }
+  .stat-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; }
+  .stat-item .stat-value { color: #111827; font-weight: 800; font-size: 14px; }
+  .stat-item .stat-unit { color: #9ca3af; font-size: 12px; }
+  .stat-divider { width: 1px; height: 18px; background: #e5e7eb; }
+  .stat-live { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 999px; background: #fef2f2; border: 1px solid #fecaca; font-size: 10px; font-weight: 800; color: #b91c1c; letter-spacing: 0.05em; }
+  .stat-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #ef4444; animation: blink 1.4s infinite; }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @media (max-width: 600px) {
+    .live-stats { gap: 8px; padding: 10px 14px; font-size: 12px; }
+    .stat-item { font-size: 12px; }
+    .stat-divider { display: none; }
+  }
   .admin-corner { position: fixed; top: 12px; right: 12px; z-index: 30; display: flex; gap: 6px; }
   .btn { font-size: 12px; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; border: 1px solid transparent; transition: all 0.15s; }
   .btn-dot { background: #ffffff; border-color: #e5e7eb; color: #9ca3af; }
@@ -131,6 +144,27 @@
       <span class="badge badge-amber">🛡 안전거래 · 신뢰 100%</span>
     </div>
   </div>
+
+  <div class="live-stats">
+    <div class="stat-item">
+      <span class="stat-live">LIVE</span>
+      <span>현재 상담중</span>
+      <span class="stat-value" id="statTalking">—</span>
+      <span class="stat-unit">명</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span>오늘 조회</span>
+      <span class="stat-value" id="statToday">—</span>
+      <span class="stat-unit">회</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span>누적 조회수</span>
+      <span class="stat-value" id="statTotal">—</span>
+      <span class="stat-unit">회</span>
+    </div>
+  </div>
   <div id="viewMode" class="view">
     <div class="content" id="content"><div class="loader">불러오는 중…</div></div>
   </div>
@@ -183,7 +217,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // ============================================================
 // 설정 — 여기 두 줄만 바꾸세요
@@ -572,6 +606,45 @@ function setupChannelCta() {
 }
 
 // ============================================================
+// 방문자 카운터 + 상담중 랜덤
+// ============================================================
+const statsRef = doc(db, "stats", "main");
+
+async function trackVisit() {
+  const today = new Date();
+  const todayKey = today.getFullYear() + "-" + String(today.getMonth()+1).padStart(2,"0") + "-" + String(today.getDate()).padStart(2,"0");
+
+  try {
+    const snap = await getDoc(statsRef);
+    let data = snap.exists() ? snap.data() : { total: 0, daily: {} };
+
+    data.total = (data.total || 0) + 1;
+    data.daily = data.daily || {};
+    data.daily[todayKey] = (data.daily[todayKey] || 0) + 1;
+    await setDoc(statsRef, data);
+
+    $("statToday").textContent = (data.daily[todayKey] || 0).toLocaleString();
+    $("statTotal").textContent = (data.total || 0).toLocaleString();
+  } catch (e) {
+    console.error("stats fail", e);
+    $("statToday").textContent = "0";
+    $("statTotal").textContent = "0";
+  }
+}
+
+function updateTalkingCount() {
+  const min = 2, max = 7;
+  const n = Math.floor(Math.random() * (max - min + 1)) + min;
+  $("statTalking").textContent = n;
+}
+
+function startStats() {
+  trackVisit();
+  updateTalkingCount();
+  setInterval(updateTalkingCount, 12000 + Math.random() * 8000);
+}
+
+// ============================================================
 // 시작
 // ============================================================
 renderAdminButtons();
@@ -579,6 +652,7 @@ bootChannelTalk();
 setupKakaoButton();
 setupChannelCta();
 loadContent();
+startStats();
 </script>
 
 </body>
