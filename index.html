@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>D4 이스타 </title>
+<title>디킹 SHOP</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #09090b; color: #e4e4e7; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; min-height: 100vh; }
@@ -39,14 +39,17 @@
   .pw-confirm { width: 100%; margin-top: 12px; background: #f59e0b; color: #09090b; font-weight: 600; padding: 10px; }
   .pw-confirm:hover { background: #fbbf24; }
   .loader { text-align: center; color: #52525b; font-size: 13px; padding: 40px 0; }
+  .kakao-btn { position: fixed; left: 16px; bottom: 16px; z-index: 40; display: flex; align-items: center; gap: 8px; background: #FEE500; color: #3a1d1d; padding: 10px 16px 10px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform 0.15s; }
+  .kakao-btn:hover { transform: translateY(-2px); }
+  .kakao-btn:active { transform: translateY(0); }
 </style>
 </head>
 <body>
-
+ 
 <div class="admin-corner" id="adminCorner">
   <button class="btn btn-dot" id="loginBtn" aria-label="관리자">·</button>
 </div>
-
+ 
 <main>
   <div id="viewMode" class="view">
     <pre class="content" id="content"><div class="loader">불러오는 중…</div></pre>
@@ -60,7 +63,14 @@
     </div>
   </div>
 </main>
-
+ 
+<a id="kakaoBtn" class="kakao-btn" href="#" target="_blank" rel="noopener" style="display:none;" aria-label="카카오 오픈채팅">
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="#3a1d1d" aria-hidden="true">
+    <path d="M12 3C6.48 3 2 6.58 2 11c0 2.83 1.85 5.31 4.64 6.74-.2.7-.72 2.6-.83 3-.13.5.18.5.39.36.16-.11 2.6-1.77 3.65-2.49.7.1 1.42.16 2.15.16 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>
+  </svg>
+  <span>오픈톡 입장</span>
+</a>
+ 
 <div class="modal" id="loginModal">
   <div class="modal-card">
     <input type="password" id="pwInput" placeholder="비밀번호" autocomplete="off" />
@@ -68,17 +78,18 @@
     <button class="btn pw-confirm" id="pwConfirm">확인</button>
   </div>
 </div>
-
+ 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
+ 
 // ============================================================
 // 설정 — 여기 두 줄만 바꾸세요
 // ============================================================
 const ADMIN_PASSWORD = "59860000";          // ← 관리자 비밀번호 (직원에게 알려줄 비번)
 const CHANNELTALK_PLUGIN_KEY = "489700dc-5cce-4b3e-a465-a28475e496a3";  // ← 채널톡 키
-
+const KAKAO_OPENCHAT_URL = "https://open.kakao.com/o/gWbuthWf";  // ← 카카오 오픈채팅 주소 (비우면 버튼 숨김)
+ 
 const firebaseConfig = {
   apiKey: "AIzaSyAQH4HxN0FEwAV2xpSJ_0_XY-OElO_Xqak",
   authDomain: "leestar-d4-8782b.firebaseapp.com",
@@ -87,33 +98,33 @@ const firebaseConfig = {
   messagingSenderId: "348543186012",
   appId: "1:348543186012:web:7417eb658d97aa08032299"
 };
-
+ 
 const DEFAULT_CONTENT = `디킹 SHOP
 24시간 운영
-
+ 
 ━━━━━━━━━━━━━━━━━━━
-
+ 
 [ 시세표 ]
-
+ 
 골드 100억          7,000원
 온전한 호라드림 5개   50,000원
 껍데기 200개        19,000원
 룬 3셋             20,000원
-
+ 
 ━━━━━━━━━━━━━━━━━━━
-
+ 
 [ 공지 ]
-
+ 
 · 안전거래 진행합니다
 · 우측 하단 채팅으로 문의 주세요`;
-
+ 
 // ============================================================
 // Firebase 초기화
 // ============================================================
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const docRef = doc(db, "shop", "main");
-
+ 
 // ============================================================
 // DOM
 // ============================================================
@@ -130,10 +141,10 @@ const pwConfirm = $("pwConfirm");
 const pwError = $("pwError");
 const saveBtn = $("saveBtn");
 const cancelBtn = $("cancelBtn");
-
+ 
 let isAdmin = false;
 let currentContent = DEFAULT_CONTENT;
-
+ 
 // ============================================================
 // 콘텐츠 로드
 // ============================================================
@@ -151,7 +162,7 @@ async function loadContent() {
   }
   contentEl.textContent = currentContent;
 }
-
+ 
 // ============================================================
 // 콘텐츠 저장
 // ============================================================
@@ -161,7 +172,7 @@ async function saveContent(newText) {
     updatedAt: Date.now()
   });
 }
-
+ 
 // ============================================================
 // 관리자 모드 UI
 // ============================================================
@@ -172,12 +183,12 @@ function renderAdminButtons() {
     editBtn.className = "btn btn-edit";
     editBtn.textContent = "편집";
     editBtn.onclick = enterEdit;
-
+ 
     const logoutBtn = document.createElement("button");
     logoutBtn.className = "btn btn-out";
     logoutBtn.textContent = "로그아웃";
     logoutBtn.onclick = () => { isAdmin = false; renderAdminButtons(); };
-
+ 
     adminCorner.appendChild(editBtn);
     adminCorner.appendChild(logoutBtn);
   } else {
@@ -189,7 +200,7 @@ function renderAdminButtons() {
     adminCorner.appendChild(dot);
   }
 }
-
+ 
 // ============================================================
 // 로그인
 // ============================================================
@@ -199,11 +210,11 @@ function openLogin() {
   pwError.classList.remove("show");
   setTimeout(() => pwInput.focus(), 50);
 }
-
+ 
 function closeLogin() {
   loginModal.classList.remove("active");
 }
-
+ 
 function tryLogin() {
   if (pwInput.value === ADMIN_PASSWORD) {
     isAdmin = true;
@@ -213,11 +224,11 @@ function tryLogin() {
     pwError.classList.add("show");
   }
 }
-
+ 
 pwConfirm.onclick = tryLogin;
 pwInput.addEventListener("keydown", (e) => { if (e.key === "Enter") tryLogin(); });
 loginModal.onclick = (e) => { if (e.target === loginModal) closeLogin(); };
-
+ 
 // ============================================================
 // 편집 모드
 // ============================================================
@@ -227,15 +238,15 @@ function enterEdit() {
   editMode.classList.add("active");
   adminCorner.style.display = "none";
 }
-
+ 
 function exitEdit() {
   editMode.classList.remove("active");
   viewMode.classList.remove("hidden");
   adminCorner.style.display = "flex";
 }
-
+ 
 cancelBtn.onclick = exitEdit;
-
+ 
 saveBtn.onclick = async () => {
   saveBtn.disabled = true;
   saveBtn.textContent = "저장중…";
@@ -250,7 +261,7 @@ saveBtn.onclick = async () => {
   saveBtn.disabled = false;
   saveBtn.textContent = "저장";
 };
-
+ 
 // ============================================================
 // 채널톡
 // ============================================================
@@ -275,14 +286,25 @@ function bootChannelTalk() {
   })();
   window.ChannelIO("boot", { pluginKey: CHANNELTALK_PLUGIN_KEY });
 }
-
+ 
+// ============================================================
+// 카카오 오픈채팅 버튼
+// ============================================================
+function setupKakaoButton() {
+  if (!KAKAO_OPENCHAT_URL) return;
+  const btn = $("kakaoBtn");
+  btn.href = KAKAO_OPENCHAT_URL;
+  btn.style.display = "flex";
+}
+ 
 // ============================================================
 // 시작
 // ============================================================
 renderAdminButtons();
 bootChannelTalk();
+setupKakaoButton();
 loadContent();
 </script>
-
+ 
 </body>
 </html>
