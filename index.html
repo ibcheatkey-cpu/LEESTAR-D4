@@ -6,74 +6,90 @@
 <title>디아블로4 이스타</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: #09090b; color: #e4e4e7; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; min-height: 100vh; }
+  html, body { background: #f8f9fa; color: #1f2937; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; min-height: 100vh; }
   main { max-width: 100%; margin: 0; padding: 32px 16px 96px 16px; }
   @media (min-width: 1100px) {
     main { padding-left: 290px; padding-right: 40px; padding-top: 48px; max-width: 1500px; margin: 0 auto; }
   }
-  pre.content, .content { white-space: pre-wrap; text-align: center; font-family: inherit; font-size: 15px; line-height: 2; color: #e4e4e7; }
-  .content h1 { font-size: 32px; font-weight: 800; margin: 24px 0 14px; color: #fbbf24; letter-spacing: -0.02em; text-shadow: 0 0 20px rgba(251,191,36,0.3); }
-  .content h2 { font-size: 24px; font-weight: 700; margin: 20px 0 10px; color: #fcd34d; }
-  .content h3 { font-size: 19px; font-weight: 600; margin: 14px 0 8px; color: #fde68a; }
-  .content strong { font-weight: 700; color: #fbbf24; }
-  .content em { font-style: italic; color: #d4d4d8; }
-  .content hr { border: none; border-top: 1px solid #3f3f46; margin: 18px auto; max-width: 320px; }
-  .content .box { display: inline-block; background: #18181b; border: 1px solid #3f3f46; border-radius: 8px; padding: 4px 14px; margin: 4px 2px; font-weight: 600; }
-  .content .box-red { background: #450a0a; border-color: #7f1d1d; color: #fca5a5; }
-  .content .box-blue { background: #0c2748; border-color: #1e40af; color: #93c5fd; }
-  .content .box-green { background: #052e1a; border-color: #166534; color: #86efac; }
-  .content .box-amber { background: #422006; border-color: #92400e; color: #fcd34d; }
-  .content .price { color: #fbbf24; font-weight: 700; font-family: ui-monospace, monospace; }
-  .content .strike { text-decoration: line-through; color: #71717a; }
-  .content .highlight { background: linear-gradient(180deg, transparent 60%, rgba(251,191,36,0.3) 60%); padding: 0 4px; }
-  .content .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; text-align: left; }
-  @media (max-width: 600px) { .content .grid { grid-template-columns: 1fr; gap: 10px; } }
-  .content .card { background: #18181b; border: 1px solid #3f3f46; border-radius: 10px; padding: 16px 18px; line-height: 1.7; }
-  .content .card-title { font-size: 16px; font-weight: 700; color: #fbbf24; margin-bottom: 4px; }
-  .content .card-sub { font-size: 11px; color: #71717a; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #27272a; }
-  .content .row { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0; font-size: 13px; }
-  .content .row-label { color: #d4d4d8; }
-  .content .row-price { color: #fbbf24; font-weight: 700; font-family: ui-monospace, monospace; }
-  .title-badge { display: flex; justify-content: center; margin: 0 0 28px; }
-  .title-badge-inner { display: inline-flex; align-items: center; gap: 10px; background: #5DCAA5; color: #04342C; padding: 12px 26px 12px 20px; border-radius: 999px; font-size: 18px; font-weight: 800; box-shadow: 0 6px 20px rgba(93,202,165,0.3); letter-spacing: -0.01em; }
-  .title-badge-inner svg { flex-shrink: 0; }
+  pre.content, .content { white-space: pre-wrap; text-align: center; font-family: inherit; font-size: 15px; line-height: 1.9; color: #1f2937; }
+  .content h1 { font-size: 30px; font-weight: 800; margin: 24px 0 14px; color: #111827; letter-spacing: -0.02em; }
+  .content h2 { font-size: 22px; font-weight: 700; margin: 20px 0 10px; color: #1f2937; }
+  .content h3 { font-size: 17px; font-weight: 600; margin: 14px 0 8px; color: #374151; }
+  .content strong { font-weight: 700; color: #111827; }
+  .content em { font-style: italic; color: #6b7280; }
+  .content hr { border: none; border-top: 1px solid #e5e7eb; margin: 24px auto; max-width: 320px; }
+  .content .box { display: inline-block; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; padding: 4px 14px; margin: 4px 2px; font-weight: 600; color: #374151; }
+  .content .box-red { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
+  .content .box-blue { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+  .content .box-green { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
+  .content .box-amber { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+  .content .price { color: #111827; font-weight: 700; }
+  .content .strike { text-decoration: line-through; color: #9ca3af; }
+  .content .highlight { background: linear-gradient(180deg, transparent 60%, #fde68a 60%); padding: 0 4px; }
+  .content .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; text-align: left; }
+  @media (max-width: 600px) { .content .grid { grid-template-columns: 1fr; gap: 12px; } }
+  .content .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px 22px; line-height: 1.7; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: box-shadow 0.2s, transform 0.2s; }
+  .content .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); transform: translateY(-1px); }
+  .content .card-title { font-size: 17px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+  .content .card-sub { font-size: 12px; color: #6b7280; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #f3f4f6; line-height: 1.5; }
+  .content .row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; font-size: 14px; }
+  .content .row-label { color: #4b5563; }
+  .content .row-price { color: #111827; font-weight: 700; }
+  .title-badge { display: flex; justify-content: center; margin: 0 0 8px; }
+  .title-badge-inner { display: inline-flex; align-items: center; gap: 10px; color: #1f2937; padding: 8px 4px; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+  .title-badge-inner svg { flex-shrink: 0; color: #7c3aed; }
+  .title-sub { text-align: center; font-size: 13px; color: #6b7280; margin-bottom: 28px; }
+  .title-sub::before { content: ""; display: block; width: 100%; max-width: 800px; margin: 24px auto 16px; border-top: 1px solid #e5e7eb; }
   .admin-corner { position: fixed; top: 12px; right: 12px; z-index: 30; display: flex; gap: 6px; }
   .btn { font-size: 12px; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; border: 1px solid transparent; transition: all 0.15s; }
-  .btn-dot { background: transparent; border-color: #27272a; color: #52525b; }
-  .btn-dot:hover { color: #d4d4d8; border-color: #52525b; }
-  .btn-edit { background: #f59e0b; color: #09090b; font-weight: 600; }
-  .btn-edit:hover { background: #fbbf24; }
-  .btn-out { background: transparent; border-color: #3f3f46; color: #a1a1aa; }
-  .btn-out:hover { color: #e4e4e7; }
+  .btn-dot { background: #ffffff; border-color: #e5e7eb; color: #9ca3af; }
+  .btn-dot:hover { color: #374151; border-color: #d1d5db; }
+  .btn-edit { background: #f59e0b; color: #ffffff; font-weight: 600; }
+  .btn-edit:hover { background: #d97706; }
+  .btn-out { background: #ffffff; border-color: #e5e7eb; color: #6b7280; }
+  .btn-out:hover { color: #1f2937; border-color: #d1d5db; }
   .editor { display: none; }
   .editor.active { display: block; }
   .editor-wrap { max-width: 1100px; margin: 0 auto; }
   .view { display: block; }
   .view.hidden { display: none; }
-  .hint { font-size: 12px; color: #f59e0b; margin-bottom: 10px; line-height: 1.6; }
-  textarea { width: 100%; height: 75vh; padding: 16px; background: #18181b; border: 1px solid #3f3f46; border-radius: 8px; color: #e4e4e7; font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 14px; line-height: 1.6; resize: vertical; outline: none; }
-  textarea:focus { border-color: #f59e0b; }
+  .hint { font-size: 12px; color: #6b7280; margin-bottom: 10px; line-height: 1.6; background: #fef3c7; padding: 10px 12px; border-radius: 6px; border: 1px solid #fde68a; }
+  .hint code { color: #b45309; font-weight: 600; }
+  .helper-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .helper-btn { font-size: 12px; padding: 7px 11px; border-radius: 6px; background: #ffffff; border: 1px solid #d1d5db; color: #374151; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .helper-btn:hover { background: #f9fafb; border-color: #9ca3af; transform: translateY(-1px); }
+  .helper-btn.helper-red { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
+  .helper-btn.helper-red:hover { background: #fee2e2; }
+  .helper-btn.helper-blue { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+  .helper-btn.helper-blue:hover { background: #dbeafe; }
+  .helper-btn.helper-green { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
+  .helper-btn.helper-green:hover { background: #dcfce7; }
+  .helper-btn.helper-amber { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+  .helper-btn.helper-amber:hover { background: #fef3c7; }
+  textarea { width: 100%; height: 75vh; padding: 16px; background: #ffffff; border: 1px solid #d1d5db; border-radius: 8px; color: #111827; font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 14px; line-height: 1.6; resize: vertical; outline: none; }
+  textarea:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.1); }
   .editor-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
-  .btn-save { background: #f59e0b; color: #09090b; font-weight: 600; padding: 8px 18px; }
-  .btn-save:hover { background: #fbbf24; }
+  .btn-save { background: #f59e0b; color: #ffffff; font-weight: 600; padding: 8px 18px; }
+  .btn-save:hover { background: #d97706; }
   .btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-cancel { background: transparent; border-color: #3f3f46; color: #d4d4d8; padding: 8px 18px; }
-  .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+  .btn-cancel { background: #ffffff; border-color: #e5e7eb; color: #6b7280; padding: 8px 18px; }
+  .btn-cancel:hover { background: #f9fafb; }
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
   .modal.active { display: flex; }
-  .modal-card { background: #18181b; border: 1px solid #3f3f46; border-radius: 10px; padding: 20px; width: 100%; max-width: 280px; }
-  .modal-card input { width: 100%; padding: 10px 12px; background: #09090b; border: 1px solid #3f3f46; border-radius: 6px; color: #e4e4e7; font-size: 14px; outline: none; font-family: inherit; }
-  .modal-card input:focus { border-color: #f59e0b; }
-  .pw-error { font-size: 12px; color: #f87171; margin-top: 8px; display: none; }
+  .modal-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; width: 100%; max-width: 320px; box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
+  .modal-card input { width: 100%; padding: 12px 14px; background: #ffffff; border: 1px solid #d1d5db; border-radius: 8px; color: #111827; font-size: 14px; outline: none; font-family: inherit; }
+  .modal-card input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.1); }
+  .pw-error { font-size: 12px; color: #dc2626; margin-top: 8px; display: none; }
   .pw-error.show { display: block; }
-  .pw-confirm { width: 100%; margin-top: 12px; background: #f59e0b; color: #09090b; font-weight: 600; padding: 10px; }
-  .pw-confirm:hover { background: #fbbf24; }
-  .loader { text-align: center; color: #52525b; font-size: 13px; padding: 40px 0; }
+  .pw-confirm { width: 100%; margin-top: 14px; background: #f59e0b; color: #ffffff; font-weight: 600; padding: 11px; }
+  .pw-confirm:hover { background: #d97706; }
+  .loader { text-align: center; color: #9ca3af; font-size: 13px; padding: 40px 0; }
   .openchat-sidebar { position: fixed; left: 16px; top: 50%; transform: translateY(-50%); z-index: 30; width: 240px; display: none; flex-direction: column; gap: 10px; }
   .openchat-sidebar.active { display: flex; }
-  .openchat-sidebar a { display: block; border-radius: 10px; overflow: hidden; background: #18181b; border: 1px solid #27272a; box-shadow: 0 4px 16px rgba(0,0,0,0.5); transition: transform 0.15s; cursor: pointer; }
-  .openchat-sidebar a:hover { transform: translateX(3px); border-color: #f59e0b; }
+  .openchat-sidebar a { display: block; border-radius: 12px; overflow: hidden; background: #ffffff; border: 1px solid #e5e7eb; box-shadow: 0 4px 16px rgba(0,0,0,0.08); transition: transform 0.15s, box-shadow 0.15s; cursor: pointer; }
+  .openchat-sidebar a:hover { transform: translateX(3px); box-shadow: 0 6px 20px rgba(245,158,11,0.2); border-color: #fbbf24; }
   .openchat-sidebar img { display: block; width: 100%; height: auto; }
-  .openchat-sidebar .cap { padding: 6px 8px; font-size: 11px; color: #fbbf24; text-align: center; font-weight: 600; }
+  .openchat-sidebar .cap { padding: 8px 10px; font-size: 12px; color: #b45309; text-align: center; font-weight: 700; background: #fef3c7; }
   .channel-cta { position: fixed; right: 92px; bottom: 24px; z-index: 35; background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(245,158,11,0.4); border: none; font-family: inherit; transition: transform 0.15s; animation: pulse 2s infinite; white-space: nowrap; }
   .channel-cta:hover { transform: translateY(-2px) scale(1.03); }
   @keyframes pulse { 0%, 100% { box-shadow: 0 6px 20px rgba(245,158,11,0.4); } 50% { box-shadow: 0 6px 28px rgba(245,158,11,0.7); } }
@@ -99,20 +115,33 @@
 <main>
   <div class="title-badge">
     <div class="title-badge-inner">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-        <path d="M5 11h14l-2 7H7l-2-7zm7-7c1.66 0 3 1.34 3 3v1H9V7c0-1.66 1.34-3 3-3zm-2 4h4V7c0-1.1-.9-2-2-2s-2 .9-2 2v1z"/>
-        <circle cx="9" cy="20" r="1.5"/>
-        <circle cx="17" cy="20" r="1.5"/>
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true">
+        <path d="M6.92 5L5 6.92l5.5 5.5L5 17.92 6.92 19.84l5.5-5.5 5.5 5.5L19.84 17.92l-5.5-5.5 5.5-5.5L17.92 5l-5.5 5.5z"/>
       </svg>
-      <span>디아블로4 이스타 시즌13 시세표</span>
+      <span>디아블로 대행 가격표</span>
     </div>
   </div>
+  <p class="title-sub">10분 이내 출발 · 안전 거래</p>
   <div id="viewMode" class="view">
     <div class="content" id="content"><div class="loader">불러오는 중…</div></div>
   </div>
   <div id="editMode" class="editor">
     <div class="editor-wrap">
-    <p class="hint">서식: # 큰제목 ## 중제목 ### 소제목 · **굵게** *기울임* ==형광== ~~취소선~~ · [red][blue][green][amber][box] 박스 · [$]가격[/$] · --- 구분선<br/>카드그리드: <code style="color:#fbbf24">[grid] [card 제목 | 부제목] 항목 | 가격 [/card] [/grid]</code><br/>HTML 태그도 그대로 사용 가능: &lt;font color="red"&gt;빨강&lt;/font&gt; &lt;b&gt;굵게&lt;/b&gt;</p>
+    <p class="hint">서식: # 큰제목 ## 중제목 ### 소제목 · **굵게** *기울임* ==형광== ~~취소선~~ · [red][blue][green][amber][box] 박스 · [$]가격[/$] · --- 구분선<br/>카드그리드: <code>[grid] [card 제목 | 부제목] 항목 | 가격 [/card] [/grid]</code><br/>HTML 태그도 그대로 사용 가능: &lt;font color="red"&gt;빨강&lt;/font&gt; &lt;b&gt;굵게&lt;/b&gt;</p>
+    <div class="helper-bar" id="helperBar">
+      <button type="button" class="helper-btn" data-tpl="card">📦 카드 추가</button>
+      <button type="button" class="helper-btn" data-tpl="grid">🔲 그리드 시작</button>
+      <button type="button" class="helper-btn" data-tpl="h1"># 큰 제목</button>
+      <button type="button" class="helper-btn" data-tpl="h2">## 중 제목</button>
+      <button type="button" class="helper-btn" data-tpl="hr">━ 구분선</button>
+      <button type="button" class="helper-btn helper-red" data-tpl="red">🔴 빨강</button>
+      <button type="button" class="helper-btn helper-blue" data-tpl="blue">🔵 파랑</button>
+      <button type="button" class="helper-btn helper-green" data-tpl="green">🟢 초록</button>
+      <button type="button" class="helper-btn helper-amber" data-tpl="amber">🟡 노랑</button>
+      <button type="button" class="helper-btn" data-tpl="bold">**굵게**</button>
+      <button type="button" class="helper-btn" data-tpl="hl">==형광==</button>
+      <button type="button" class="helper-btn" data-tpl="strike">~~취소선~~</button>
+    </div>
     <textarea id="editText" spellcheck="false"></textarea>
     <div class="editor-actions">
       <button class="btn btn-cancel" id="cancelBtn">취소</button>
@@ -414,6 +443,40 @@ function exitEdit() {
 }
 
 cancelBtn.onclick = exitEdit;
+
+const TEMPLATES = {
+  card: '\n[card ✨ 카테고리 | 부제목 설명]\n1회 | 6,000원\n5회 | 28,000원\n10회 | 52,000원\n[/card]\n',
+  grid: '\n[grid]\n\n[/grid]\n',
+  h1: '\n# 큰 제목\n',
+  h2: '\n## 중간 제목\n',
+  hr: '\n---\n',
+  red: '[red]내용[/red]',
+  blue: '[blue]내용[/blue]',
+  green: '[green]내용[/green]',
+  amber: '[amber]내용[/amber]',
+  bold: '**굵게**',
+  hl: '==형광==',
+  strike: '~~취소선~~'
+};
+
+function insertAtCursor(text) {
+  const ta = editText;
+  const start = ta.selectionStart;
+  const end = ta.selectionEnd;
+  const before = ta.value.substring(0, start);
+  const after = ta.value.substring(end);
+  ta.value = before + text + after;
+  const newPos = start + text.length;
+  ta.focus();
+  ta.setSelectionRange(newPos, newPos);
+}
+
+document.querySelectorAll(".helper-btn").forEach(btn => {
+  btn.onclick = () => {
+    const tpl = btn.getAttribute("data-tpl");
+    if (TEMPLATES[tpl]) insertAtCursor(TEMPLATES[tpl]);
+  };
+});
 
 saveBtn.onclick = async () => {
   saveBtn.disabled = true;
