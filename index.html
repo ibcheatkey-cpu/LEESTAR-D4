@@ -141,6 +141,8 @@
       <button type="button" class="helper-btn" data-tpl="bold">**굵게**</button>
       <button type="button" class="helper-btn" data-tpl="hl">==형광==</button>
       <button type="button" class="helper-btn" data-tpl="strike">~~취소선~~</button>
+      <button type="button" class="helper-btn" id="copyAllBtn" style="margin-left:auto;">📋 전체 복사</button>
+      <button type="button" class="helper-btn" id="resetBtn">↺ 초기 양식</button>
     </div>
     <textarea id="editText" spellcheck="false"></textarea>
     <div class="editor-actions">
@@ -430,7 +432,7 @@ loginModal.onclick = (e) => { if (e.target === loginModal) closeLogin(); };
 // 편집 모드
 // ============================================================
 function enterEdit() {
-  editText.value = currentContent;
+  editText.value = currentContent && currentContent.trim() ? currentContent : DEFAULT_CONTENT;
   viewMode.classList.add("hidden");
   editMode.classList.add("active");
   adminCorner.style.display = "none";
@@ -472,11 +474,32 @@ function insertAtCursor(text) {
 }
 
 document.querySelectorAll(".helper-btn").forEach(btn => {
+  if (btn.id === "copyAllBtn" || btn.id === "resetBtn") return;
   btn.onclick = () => {
     const tpl = btn.getAttribute("data-tpl");
     if (TEMPLATES[tpl]) insertAtCursor(TEMPLATES[tpl]);
   };
 });
+
+document.getElementById("copyAllBtn").onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(editText.value);
+    const b = document.getElementById("copyAllBtn");
+    const old = b.textContent;
+    b.textContent = "✓ 복사됨";
+    setTimeout(() => { b.textContent = old; }, 1500);
+  } catch (e) {
+    editText.select();
+    document.execCommand("copy");
+  }
+};
+
+document.getElementById("resetBtn").onclick = () => {
+  if (confirm("편집창을 초기 카드 양식으로 되돌릴까요?\n(저장 전이라면 현재 사이트 내용은 그대로 유지됩니다)")) {
+    editText.value = DEFAULT_CONTENT;
+    editText.focus();
+  }
+};
 
 saveBtn.onclick = async () => {
   saveBtn.disabled = true;
